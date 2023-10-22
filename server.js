@@ -2,6 +2,16 @@ const express = require('express');
 const app = express();
 const tasks = require('./tasks');
 
+const validateMethod = (req, res, next) => {
+  const validMethods = ['GET', 'POST', 'PUT', 'DELETE'];
+  if (!validMethods.includes(req.method)) {
+    return res.status(405).send('Método HTTP no permitido');
+  }
+  next();
+};
+
+app.use(validateMethod);
+
 app.get('/tasks', (req, res) => {
   res.json(tasks);
 });
