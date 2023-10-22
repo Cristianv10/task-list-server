@@ -27,7 +27,7 @@ editRouter.use(handleErrors);
 editRouter.post('/create', (req, res) => {
   const taskData = req.body;
   tasks.push({...taskData, status: taskData.status || 'No completado'});
-  res.json({ message: 'Tarea creada exitosamente' });
+  res.send(200).json({ message: 'Tarea creada exitosamente' });
 });
 
 editRouter.delete('/delete/:id', (req, res) => {
@@ -35,9 +35,9 @@ editRouter.delete('/delete/:id', (req, res) => {
   const indexTaskToDelete = tasks.findIndex(task => task.id == id);
   if (indexTaskToDelete !== -1) {
     tasks.splice(indexTaskToDelete, 1);
-    res.json({ message: 'Tarea eliminada exitosamente' });
+    res.send(200).json({ message: 'Tarea eliminada exitosamente' });
   } else {
-    res.json({ error: 'Tarea inexistente' });
+    res.send(404).json({ error: 'Tarea inexistente' });
   }
 });
 
@@ -47,9 +47,9 @@ editRouter.put('/update/:id', (req, res) => {
   const indexTaskToUpdate = tasks.findIndex(task => task.id == id);
   if (indexTaskToUpdate !== -1) {
     tasks[indexTaskToUpdate] = { ...tasks[indexTaskToUpdate], ...updatedTaskData };
-    res.json({ message: 'Tarea actualizada exitosamente' });
+    res.send(200).json({ message: 'Tarea actualizada exitosamente' });
   } else {
-    res.json({ error: 'Tarea inexistente' });
+    res.send(404).json({ error: 'Tarea inexistente' });
   }
 });
 

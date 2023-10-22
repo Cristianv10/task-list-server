@@ -16,23 +16,14 @@ viewRouter.use(validateParams);
 viewRouter.get('/:status', (req, res) => {
   if (req.params.status == 'completado') {
     const completedTasks = tasks.filter(task => task.status === 'Completado');
-    res.json(completedTasks);
+    res.send(200).json(completedTasks);
   } else {
     if (req.params.status == 'pendiente') {
       const incompleteTasks = tasks.filter(task => task.status === 'No completado');
-      res.json(incompleteTasks);
+      res.send(200).json(incompleteTasks);
     } 
   }
 });
 
-viewRouter.get('/completed', (req, res) => {
-  const completedTasks = tasks.filter(task => task.status === 'Completado');
-  res.json(completedTasks);
-});
-
-viewRouter.get('/incomplete', (req, res) => {
-  const incompleteTasks = tasks.filter(task => task.status === 'No completado');
-  res.json(incompleteTasks);
-});
 
 module.exports = viewRouter;

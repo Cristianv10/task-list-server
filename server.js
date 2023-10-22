@@ -59,7 +59,16 @@ app.get('/protected', verifyToken, (req, res) => {
 app.use(validateMethod);
 
 app.get('/tasks', (req, res) => {
-  res.json(tasks);
+  res.send(200).json(tasks);
+});
+
+app.get('/tasks/:id', (req, res) => {
+    const task = tasks.filter(task => task.id == req.params.id);
+    if (task.length == 1) {
+      res.send(200).json({tarea: task[0]});
+    } else {
+      res.send(404).json({error: 'Tarea inexistente'});
+    }
 });
 
 const viewRouter = require('./list-view-router');
